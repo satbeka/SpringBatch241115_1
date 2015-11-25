@@ -2,6 +2,7 @@ package db2;
 
 /**
  * Created by 1 on 25.11.2015.
+ * http://www.java2s.com/Code/Java/Spring/UseJdbcTemplateToCreateTable.htm
  */
 public class TableCreate {
 

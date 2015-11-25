@@ -2,6 +2,7 @@ package db2;
 
 /**
  * Created by 1 on 25.11.2015.
+ * http://www.java4s.com/spring/spring-jdbc-hello-world-example-create-table-in-database/
  */
 public class SpringJdbcCreateTable
 {
