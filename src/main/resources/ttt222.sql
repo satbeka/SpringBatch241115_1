@@ -1,5 +1,5 @@
 -- Create table
-create table TWLTRAINING
+create table TISR_TWLTRAINING
 (
   ID          NUMBER not null,
   VTTNAME     VARCHAR2(50),
@@ -11,6 +11,6 @@ create table TWLTRAINING
 )
 );
 -- Create/Recreate primary, unique and foreign key constraints 
-alter table TWLTRAINING
+alter table TISR_TWLTRAINING
   add constraint IDD primary key (ID)
   ;

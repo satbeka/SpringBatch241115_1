@@ -9,104 +9,28 @@
     <!-- Definition for tbl bean -->
     <bean id="tblName" class="db1.Tbl">
         <property name="name">
-            <value>TWLTRAINING</value>
+            <value>TISR_TWLTRAINING</value>
         </property>
     </bean>
 
-    <!-- Definition for tblJDBCTemplate bean -->
-    <bean id="tblJDBCTemplate"
-          class="dao.TblJDBCTemplate">
-        <property name="dataSource"  ref="dataSource1" />
-    </bean>
-
-    <bean id="dataSource1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="com.oracle.jdbc.Driver"/>
-        <property name="url" value="jdbc:oracle:thin:@ALA-SRV-DB-SVR.tisr.kz:1521:primary"/>
-        <property name="username" value="ercb"/>
-        <property name="password" value="ercb"/>
-    </bean>
-
-    <jdbc:initialize-database data-source="dataSource1" enabled="true">
-        <jdbc:script location="classpath:/org/springframework/batch/core/schema-drop-oracle10g.sql" />
-        <jdbc:script location="classpath:/org/springframework/batch/core/schema-oracle10g.sql" />
-    </jdbc:initialize-database>
-
-
-
-
-
-
-
-    <bean id="dataSource2" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="com.oracle.jdbc.Driver"/>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
         <property name="url" value="jdbc:oracle:thin:@ALA-SRV-DB-TST1.tisr.kz:1521:Test01"/>
         <property name="username" value="ercb"/>
         <property name="password" value="ercb"/>
     </bean>
 
-    <jdbc:initialize-database data-source="dataSource2" enabled="true">
-        <jdbc:script location="classpath:/org/springframework/batch/core/schema-drop-oracle10g.sql" />
-        <jdbc:script location="classpath:/org/springframework/batch/core/schema-oracle10g.sql" />
-    </jdbc:initialize-database>
-
-    <bean id="jdbcTemplate2" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="dataSource2"/>
+    <!-- Definition for tblJDBCTemplate bean -->
+    <bean id="tblJDBCTemplate"
+          class="dao.TblJDBCTemplate">
+        <property name="dataSource"  ref="dataSource" />
     </bean>
 
 
-    <!--context.xml-->
-    <bean id="jobRepository"
-          class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
-        <property name="dataSource" ref="dataSource1" />
-        <property name="transactionManager" ref="transactionManager" />
-        <property name="databaseType" value="mysql" />
-    </bean>
-
-    <bean id="transactionManager"
-          class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
-
-    <bean id="jobLauncher"
-          class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
-        <property name="jobRepository" ref="jobRepository" />
-    </bean>
-
-    <!-- stored job-meta in memory -->
-    <!--
-    <bean id="jobRepository"
-          class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="transactionManager" ref="transactionManager"/>
-        <property name="lobHandler" ref="lobHandler"/>
-    </bean>
-    -->
 
 
 
 
-    <bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler"/>
 
-    <bean name="sampleReader" class="org.springframework.batch.item.file.FlatFileItemReader">
-        <property name="resource" value="http://finance.yahoo.com/d/quotes.csv?s=XOM+IBM+JNJ+MSFT&amp;f=snd1ol1p2" />
-        <property name="lineMapper" ref="sampleLineMapper" />
-    </bean>
 
-    <bean name="sampleLineMapper"
-          class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
-        <property name="fieldSetMapper" ref="sampleMapper" />
-        <property name="lineTokenizer" ref="sampleLineTokenizer" />
-    </bean>
-
-    <bean name="sampleMapper" class="com.springapp.batch.SampleItemFieldSetMapper" />
-
-    <bean name="sampleLineTokenizer" class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer" />
-
-    <bean id="sampleWriter" class="com.springapp.batch.SampleWriter"/>
-
-    <batch:job id="sampleJob">
-        <batch:step id="stepOne">
-            <batch:tasklet transaction-manager="transactionManager">
-                <batch:chunk reader="sampleReader" writer="sampleWriter" commit-interval="10" />
-            </batch:tasklet>
-        </batch:step>
-    </batch:job>
 </beans>
