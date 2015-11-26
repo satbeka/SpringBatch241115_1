@@ -44,8 +44,19 @@ public class Tbl2JDBCTemplate implements Tbl2Dao {
 
     @Override
     public void dropTbl(Tbl tbl) {
-        String sqlDropTbl="drop table "+tbl.getName()+"222"+";";
-        jdbcTemplateObject2.execute(sqlDropTbl);
+
+        String sqlDropTbl="drop table "+tbl.getName()+"222";
+
+try {
+    jdbcTemplateObject2.execute(sqlDropTbl);
+}
+catch (Exception e){
+    if (!e.getMessage().contains("ORA-00942: таблица или представление пользователя не существует")){
+        System.out.println(" ok e.getMessage()="+e.getMessage().toString());
+        return;
+    };
+    System.out.println("e.getMessage()="+e.getMessage().toString());
+};
         System.out.println("end dropTbl() ");
 
 

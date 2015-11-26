@@ -38,7 +38,7 @@
 
     <!-- Definition for tblJDBCTemplate bean -->
     <bean id="tblJDBCTemplate2"
-          class="db1.dao.TblJDBCTemplate">
+          class="db2.dao.Tbl2JDBCTemplate">
         <property name="dataSource"  ref="dataSource2" />
     </bean>
 

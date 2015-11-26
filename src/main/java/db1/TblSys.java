@@ -43,7 +43,7 @@ public class TblSys {
 
         }
 
-        strBld.append(");");
+        strBld.append(")");
 
         return strBld.toString();
 
