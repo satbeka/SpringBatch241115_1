@@ -72,6 +72,11 @@ public class TblSys {
         tblJDBCTemplate2.dropTbl(tbl);
         tblJDBCTemplate2.createTbl(sqlCreateTbl);
 
+        //insertû
+
+
+
+
     }
 
 }
