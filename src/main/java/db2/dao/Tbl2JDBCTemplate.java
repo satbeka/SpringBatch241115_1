@@ -20,7 +20,7 @@ public class Tbl2JDBCTemplate implements Tbl2Dao {
     private JdbcTemplate jdbcTemplateObject2;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate2;
 
-    @Override
+
     public void setDataSource(DataSource dataSource2) {
 
         this.dataSource2 = dataSource2;
@@ -30,7 +30,7 @@ public class Tbl2JDBCTemplate implements Tbl2Dao {
 
 
 
-    @Override
+
     public void createTbl(String sqlCreateTbl) {
         //String SQL = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE from all_tab_columns cc where cc.TABLE_NAME= ?";
         System.out.println("sqlCreateTbl=" + sqlCreateTbl+"222");
@@ -44,7 +44,7 @@ public class Tbl2JDBCTemplate implements Tbl2Dao {
 
     }
 
-    @Override
+
     public void dropTbl(Tbl tbl) {
 
         String sqlDropTbl="drop table "+tbl.getName()+"222";
@@ -80,7 +80,6 @@ catch (Exception e){
     }
 
 
-    @Override
     public int[] insTbl(Tbl tbl, List<Map<String, Object>> mapList) {
 
             System.out.println("insTbl tbl.getName()="+tbl.getName());
