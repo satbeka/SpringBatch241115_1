@@ -25,4 +25,5 @@ public interface TblDao {
     public List<Map<String, Object>> selectRecTbl(Tbl tbl);
 
 
+    int maxRecTbl(Tbl tbl);
 }

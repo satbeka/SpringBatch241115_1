@@ -123,19 +123,19 @@ public class TblSys {
 
 
         //insertû
-        System.out.println("------Tbl selectRecTbl--------");
-        List<Map<String, Object>> mapList=tblJDBCTemplate.selectRecTbl(tbl);
-        int maxRecTbl=mapList.size();
+        int maxRecTbl=tblJDBCTemplate.maxRecTbl(tbl);
         int rownum=0;
 
         while (tbl.getRowNumFrom()<maxRecTbl) {
+            System.out.println("------Tbl selectRecTbl--------");
+            List<Map<String, Object>> mapList=tblJDBCTemplate.selectRecTbl(tbl);
+
             int[] intMassive=tblJDBCTemplate2.insTbl(tbl,mapList);
             rownum=tbl.getRowNumTo()-tbl.getRowNumFrom();
             tbl.setRowNumFrom(tbl.getRowNumTo());
             tbl.setRowNumTo(tbl.getRowNumTo()+rownum);
 
         }
-
 
 
     }

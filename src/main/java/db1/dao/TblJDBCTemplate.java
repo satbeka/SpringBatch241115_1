@@ -71,20 +71,7 @@ public class TblJDBCTemplate implements TblDao {
 
     @Override
     public List<Map<String, Object>> selectRecTbl(Tbl tbl) {
-        //String SQL = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE from all_tab_columns cc where cc.TABLE_NAME= ?";
         System.out.println("selectRecTbl tbl.getName()="+tbl.getName());
-        //Map<String, String> param = Collections.singletonMap("tblname",tbl.getName());
-
-        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        namedParameters.addValue("tblname",tbl.getName());
-
-
-        /*
-        String SQL = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE from all_tab_columns cc where cc.TABLE_NAME " +
-                "= 'TISR_TWLTRAINING'";
-        */
-
-        //String SQL = "select * from "+tbl.getName()+" where ROW_COUNT ";
         int rowFrom=tbl.getRowNumFrom();
         int rowTo=tbl.getRowNumTo();
         String sqlField= TblSys.getColmnForSelectSQL(tbl);
@@ -92,18 +79,6 @@ public class TblJDBCTemplate implements TblDao {
         String SQL ="select "+sqlField+" from  (select rownum r_id,r.* from "+tbl.getName()+" r) tt " +
                 "where tt.r_id>"+rowFrom+" and tt.r_id<="+rowTo;
 
-        /*
-        String SQL2 = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE from all_tab_columns cc where rownum<5" +
-                " and cc.TABLE_NAME = ?";
-        */
-
-
-        //String SQL2 = "select * from dual";
-        //String rrr= jdbcTemplateObject.queryFor(SQL2);
-
-        //List<Column> columns= jdbcTemplateObject.query(SQL, new ColumnMapper(), new Object[]{tbl.getName()} );
-        //List<Column> columns = namedParameterJdbcTemplate.queryForList(SQL,namedParameters,Column.class);
-        //List<Column> columns = jdbcTemplateObject.queryForList(SQL,Column.class);
         List<Map<String, Object>> mapList;
         try {
          mapList=jdbcTemplateObject.queryForList(SQL);
@@ -119,4 +94,27 @@ public class TblJDBCTemplate implements TblDao {
         */
         return mapList;
     }
+
+    @Override
+    public int maxRecTbl(Tbl tbl) {
+        System.out.println("maxRecTbl tbl.getName()="+tbl.getName());
+
+        String SQL ="select count(*) from "+tbl.getName() ;
+
+        int max=0;
+        try {
+            max=jdbcTemplateObject.queryForObject(SQL, Integer.class);
+        }
+        catch (Exception e){
+            return max;
+        }
+
+        System.out.println("select max");
+        /*
+        Object rId=mapList.get(0);
+        mapList.remove(rId);
+        */
+        return max;
+    }
+
 }
