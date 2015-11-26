@@ -1,4 +1,4 @@
-package dao;
+package db1.dao;
 
 import db1.Column;
 import db1.Tbl;
@@ -7,9 +7,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by 1 on 25.11.2015.

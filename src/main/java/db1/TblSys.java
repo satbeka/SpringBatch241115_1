@@ -1,6 +1,7 @@
 package db1;
 
-import dao.TblJDBCTemplate;
+import db1.dao.TblJDBCTemplate;
+import db2.dao.Tbl2JDBCTemplate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class TblSys {
 
     public static String getCreateSQL(Tbl tbl){
-        String sqlCreateTbl="create table "+tbl.getName()+"\n" +
+        String sqlCreateTbl="create table "+tbl.getName()+"222"+"\n" +
                 "(\n" ;
 
         List list=tbl.getColumnList();
@@ -23,10 +24,20 @@ public class TblSys {
         for (int i = 0; i < list.size(); i++) {
             Column columnV=(Column)list.get(i);
             strBld.append(" " + columnV.getcOLUMN_NAME() + " ");
-            strBld.append("  "+columnV.getdATA_TYPE()+"(");
-            strBld.append(columnV.getdATA_LENGTH()+")");
+            strBld.append("  " + columnV.getdATA_TYPE());
+            String type=columnV.getdATA_TYPE();
+            if (! (type.contains("TIMESTAMP")||
+            type.contains("DATE")||
+            type.contains("NUMBER")
+                    )  ){
+                strBld.append("("+columnV.getdATA_LENGTH()+")");
+            }
+
             if (columnV.getnULLABLE().contains("N")){
-                strBld.append(" not null, ");
+                strBld.append(" not null ");
+            }
+            if (i!=list.size()-1){
+                strBld.append(",");
             }
 
 
@@ -49,9 +60,17 @@ public class TblSys {
         String tblName=tbl.getName();
         System.out.println("tblName="+tblName);
 
-        System.out.println("------Tbl selectTbl--------" );
+        System.out.println("------Tbl selectTbl--------");
         tblJDBCTemplate.selectTbl(tbl);
 
+        String sqlCreateTbl=getCreateSQL(tbl);
+        System.out.println("sqlCreateTbl="+sqlCreateTbl);
+
+
+        Tbl2JDBCTemplate tblJDBCTemplate2 =
+                (Tbl2JDBCTemplate)context.getBean("tblJDBCTemplate2");
+        tblJDBCTemplate2.dropTbl(tbl);
+        tblJDBCTemplate2.createTbl(sqlCreateTbl);
 
     }
 

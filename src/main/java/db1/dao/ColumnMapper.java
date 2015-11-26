@@ -1,4 +1,4 @@
-package dao;
+package db1.dao;
 
 import db1.Column;
 

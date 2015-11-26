@@ -1,9 +1,8 @@
-package dao;
+package db1.dao;
 
 import db1.Tbl;
 
 import javax.sql.DataSource;
-import java.util.List;
 
 /**
  * Created by 1 on 25.11.2015.
