@@ -23,7 +23,7 @@ public interface Tbl2Dao {
     public void createTbl(String sqlCreateTbl);
     public void dropTbl(Tbl tbl);
 
-    public void insTbl(Tbl tbl,List<Map<String, Object>> mapList);
+    public int[] insTbl(Tbl tbl, List<Map<String, Object>> mapList);
 
 
 

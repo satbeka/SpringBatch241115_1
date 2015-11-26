@@ -14,6 +14,25 @@ import java.util.Map;
 public class TblSys {
 
 
+    public static String getParmsForSelectSQL(Tbl tbl){
+
+        List list=tbl.getColumnList();
+        if (tbl==null){return "";};
+        if (list==null){return "";};
+
+        StringBuilder strBld=new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            Column columnV=(Column)list.get(i);
+            strBld.append(":"+columnV.getcOLUMN_NAME());
+            if (i!=list.size()-1){
+                strBld.append(",");
+            }
+
+        }
+
+        return strBld.toString();
+
+    }
     public static String getColmnForSelectSQL(Tbl tbl){
 
         List list=tbl.getColumnList();
@@ -35,9 +54,7 @@ public class TblSys {
     }
 
     public static String getSelectSQL(Tbl tbl){
-        String sqlCreateTbl="select * from "+tbl.getName()+"222";
-
-
+        String sqlCreateTbl="select * from "+tbl.getName();
 
         return sqlCreateTbl;
 
@@ -104,9 +121,20 @@ public class TblSys {
         tblJDBCTemplate2.dropTbl(tbl);
         tblJDBCTemplate2.createTbl(sqlCreateTbl);
 
+
         //insertû
         System.out.println("------Tbl selectRecTbl--------");
         List<Map<String, Object>> mapList=tblJDBCTemplate.selectRecTbl(tbl);
+        int maxRecTbl=mapList.size();
+        int rownum=0;
+
+        while (tbl.getRowNumFrom()<maxRecTbl) {
+            int[] intMassive=tblJDBCTemplate2.insTbl(tbl,mapList);
+            rownum=tbl.getRowNumTo()-tbl.getRowNumFrom();
+            tbl.setRowNumFrom(tbl.getRowNumTo());
+            tbl.setRowNumTo(tbl.getRowNumTo()+rownum);
+
+        }
 
 
 

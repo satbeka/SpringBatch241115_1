@@ -1,13 +1,13 @@
 package db2.dao;
 
-import db1.Column;
 import db1.Tbl;
 import db1.TblSys;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +33,7 @@ public class Tbl2JDBCTemplate implements Tbl2Dao {
     @Override
     public void createTbl(String sqlCreateTbl) {
         //String SQL = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE from all_tab_columns cc where cc.TABLE_NAME= ?";
-        System.out.println("sqlCreateTbl=" + sqlCreateTbl);
+        System.out.println("sqlCreateTbl=" + sqlCreateTbl+"222");
 
         String SQL = sqlCreateTbl;
         jdbcTemplateObject2.execute(SQL);
@@ -64,56 +64,55 @@ catch (Exception e){
 
     }
 
+    public static Map<String, Object>[] getArrayData(List<Map<String, Object>> list){
+        @SuppressWarnings("unchecked")
+        Map<String, Object>[] maps = new HashMap[list.size()];
+
+        Iterator<Map<String, Object>> iterator = list.iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            Map<java.lang.String, java.lang.Object> map = (Map<java.lang.String, java.lang.Object>) iterator
+                    .next();
+            maps[i++] = map;
+        }
+
+        return maps;
+    }
+
+
     @Override
-    public void insTbl(Tbl tbl,List<Map<String, Object>> mapList) {
+    public int[] insTbl(Tbl tbl, List<Map<String, Object>> mapList) {
 
-            //String SQL = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE from all_tab_columns cc where cc.TABLE_NAME= ?";
-            System.out.println("selectRecTbl tbl.getName()="+tbl.getName());
-            //Map<String, String> param = Collections.singletonMap("tblname",tbl.getName());
-
-            MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-            namedParameters.addValue("tblname",tbl.getName());
-
-
-        /*
-        String SQL = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE from all_tab_columns cc where cc.TABLE_NAME " +
-                "= 'TISR_TWLTRAINING'";
-        */
-
-            //String SQL = "select * from "+tbl.getName()+" where ROW_COUNT ";
-            int rowFrom=tbl.getRowNumFrom();
-            int rowTo=tbl.getRowNumTo();
+            System.out.println("insTbl tbl.getName()="+tbl.getName());
+            int[] updateCounts = new int[0];
+            //int rowFrom=tbl.getRowNumFrom();
+            //int rowTo=tbl.getRowNumTo();
             String sqlField= TblSys.getColmnForSelectSQL(tbl);
+            String sqlParms= TblSys.getParmsForSelectSQL(tbl);
+            String SQL = "insert into "+tbl.getName()+"222"+" "
+                +
+                "("+sqlField+")\n" +
+                "values\n" +
+                "("+sqlParms+")\n";
 
-            String SQL ="select "+sqlField+" from  (select rownum r_id,r.* from "+tbl.getName()+" r) tt " +
-                    "where tt.r_id>"+rowFrom+" and tt.r_id<="+rowTo;
-
-        /*
-        String SQL2 = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE from all_tab_columns cc where rownum<5" +
-                " and cc.TABLE_NAME = ?";
-        */
-
-
-            //String SQL2 = "select * from dual";
-            //String rrr= jdbcTemplateObject.queryFor(SQL2);
-
-            //List<Column> columns= jdbcTemplateObject.query(SQL, new ColumnMapper(), new Object[]{tbl.getName()} );
-            //List<Column> columns = namedParameterJdbcTemplate.queryForList(SQL,namedParameters,Column.class);
-            //List<Column> columns = jdbcTemplateObject.queryForList(SQL,Column.class);
-            List<Map<String, Object>> mapList;
+/*
+            SqlParameterSource[] batch = SqlParameterSourceUtils
+                .createBatch(mapList.toArray());
+*/
+            Map<String, Object>[] batchValues = getArrayData(mapList);
             try {
-                mapList=jdbcTemplateObject.queryForList(SQL);
+                updateCounts=this.namedParameterJdbcTemplate2.batchUpdate(SQL, batchValues);
             }
             catch (Exception e){
-                return;
+                return updateCounts;
             }
 
-            System.out.println("select TBL");
+            System.out.println("insTbl TBL222");
         /*
         Object rId=mapList.get(0);
         mapList.remove(rId);
         */
-            return;
+            return updateCounts;
 
 
 
