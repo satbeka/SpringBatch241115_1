@@ -20,7 +20,7 @@ public class TblJDBCTemplate implements TblDao {
     private JdbcTemplate jdbcTemplateObject;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    @Override
+
     public void setDataSource(DataSource dataSource) {
 
         this.dataSource = dataSource;
@@ -28,7 +28,7 @@ public class TblJDBCTemplate implements TblDao {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    @Override
+
     public void selectTbl(Tbl tbl) {
         //String SQL = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE from all_tab_columns cc where cc.TABLE_NAME= ?";
         System.out.println("tbl.getName()="+tbl.getName());
@@ -69,7 +69,7 @@ public class TblJDBCTemplate implements TblDao {
 
     }
 
-    @Override
+
     public List<Map<String, Object>> selectRecTbl(Tbl tbl) {
         System.out.println("selectRecTbl tbl.getName()="+tbl.getName());
         int rowFrom=tbl.getRowNumFrom();
@@ -95,7 +95,7 @@ public class TblJDBCTemplate implements TblDao {
         return mapList;
     }
 
-    @Override
+
     public int maxRecTbl(Tbl tbl) {
         System.out.println("maxRecTbl tbl.getName()="+tbl.getName());
 

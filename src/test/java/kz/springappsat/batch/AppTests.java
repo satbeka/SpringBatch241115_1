@@ -1,4 +1,4 @@
-package com.springapp.batch;
+package kz.springappsat.batch;
 
 import junit.framework.Assert;
 import org.junit.Test;

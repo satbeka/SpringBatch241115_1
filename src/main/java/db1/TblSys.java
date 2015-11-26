@@ -98,7 +98,7 @@ public class TblSys {
 
     }
 
-    public static void main(String[] args) {
+    public static boolean execute() {
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("spring-config.xml");
 
@@ -135,9 +135,10 @@ public class TblSys {
             tbl.setRowNumFrom(tbl.getRowNumTo());
             tbl.setRowNumTo(tbl.getRowNumTo()+rownum);
 
-        }
+        };
 
+        return true;
 
-    }
+   }
 
 }
