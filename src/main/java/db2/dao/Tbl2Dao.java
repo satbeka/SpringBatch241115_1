@@ -3,6 +3,8 @@ package db2.dao;
 import db1.Tbl;
 
 import javax.sql.DataSource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 1 on 25.11.2015.
@@ -21,6 +23,7 @@ public interface Tbl2Dao {
     public void createTbl(String sqlCreateTbl);
     public void dropTbl(Tbl tbl);
 
+    public void insTbl(Tbl tbl,List<Map<String, Object>> mapList);
 
 
 

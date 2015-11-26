@@ -6,11 +6,43 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 1 on 25.11.2015.
  */
 public class TblSys {
+
+
+    public static String getColmnForSelectSQL(Tbl tbl){
+
+        List list=tbl.getColumnList();
+        if (tbl==null){return "";};
+        if (list==null){return "";};
+
+        StringBuilder strBld=new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            Column columnV=(Column)list.get(i);
+            strBld.append(" " + columnV.getcOLUMN_NAME());
+            if (i!=list.size()-1){
+                strBld.append(",");
+            }
+
+        }
+
+        return strBld.toString();
+
+    }
+
+    public static String getSelectSQL(Tbl tbl){
+        String sqlCreateTbl="select * from "+tbl.getName()+"222";
+
+
+
+        return sqlCreateTbl;
+
+    }
+
 
     public static String getCreateSQL(Tbl tbl){
         String sqlCreateTbl="create table "+tbl.getName()+"222"+"\n" +
@@ -60,12 +92,12 @@ public class TblSys {
         String tblName=tbl.getName();
         System.out.println("tblName="+tblName);
 
-        System.out.println("------Tbl selectTbl--------");
+
+        System.out.println("------Tbl selectTblForCreate--------");
         tblJDBCTemplate.selectTbl(tbl);
 
         String sqlCreateTbl=getCreateSQL(tbl);
-        System.out.println("sqlCreateTbl="+sqlCreateTbl);
-
+        System.out.println("sqlCreateTbl=" + sqlCreateTbl);
 
         Tbl2JDBCTemplate tblJDBCTemplate2 =
                 (Tbl2JDBCTemplate)context.getBean("tblJDBCTemplate2");
@@ -73,7 +105,8 @@ public class TblSys {
         tblJDBCTemplate2.createTbl(sqlCreateTbl);
 
         //insertû
-
+        System.out.println("------Tbl selectRecTbl--------");
+        List<Map<String, Object>> mapList=tblJDBCTemplate.selectRecTbl(tbl);
 
 
 

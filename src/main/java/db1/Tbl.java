@@ -1,6 +1,5 @@
 package db1;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,4 +24,25 @@ public class Tbl {
 
     private List<Column> columnList;
     private String name;
+
+
+    private int rowNumFrom=0;
+
+    public int getRowNumFrom() {
+        return rowNumFrom;
+    }
+
+    public void setRowNumFrom(int rowNumFrom) {
+        this.rowNumFrom = rowNumFrom;
+    }
+
+    public int getRowNumTo() {
+        return rowNumTo;
+    }
+
+    public void setRowNumTo(int rowNumTo) {
+        this.rowNumTo = rowNumTo;
+    }
+
+    private int rowNumTo=5000;
 }
