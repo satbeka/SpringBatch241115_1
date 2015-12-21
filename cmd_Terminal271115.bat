@@ -1,1 +1,0 @@
-$ java -cp "target/dependency-jars/*:target/SpringAppBatch.jar" org.springframework.batch.core.launch.support.CommandLineJobRunner spring/batch/jobs/job-read-files.xml readJob

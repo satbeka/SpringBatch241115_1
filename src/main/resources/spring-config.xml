@@ -9,15 +9,15 @@
     <!-- Definition for tbl bean -->
     <bean id="tblName" class="db1.Tbl">
         <property name="name">
-            <value>TISR_TWLTRAINING</value>
+            <value>teacher</value>
         </property>
     </bean>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <property name="url" value="jdbc:oracle:thin:@ALA-SRV-DB-TST1.tisr.kz:1521:Test01"/>
-        <property name="username" value="ercb"/>
-        <property name="password" value="ercb"/>
+        <property name="url" value="jdbc:oracle:thin:@178.89.109.139:1521/ORCL"/>
+        <property name="username" value="SCHOOLSTAT"/>
+        <property name="password" value="SCHOOLSTAT#325"/>
     </bean>
 
     <!-- Definition for tblJDBCTemplate bean -->
@@ -31,9 +31,9 @@
 
     <bean id="dataSource2" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <property name="url" value="jdbc:oracle:thin:@ALA-SRV-DB-TST1.tisr.kz:1521:Test01"/>
-        <property name="username" value="ercb"/>
-        <property name="password" value="ercb"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+        <property name="username" value="test"/>
+        <property name="password" value="test"/>
     </bean>
 
     <!-- Definition for tblJDBCTemplate bean -->
@@ -41,16 +41,6 @@
           class="db2.dao.Tbl2JDBCTemplate">
         <property name="dataSource"  ref="dataSource2" />
     </bean>
-
-    <!-- JobRepository and JobLauncher are configuration/setup classes -->
-    <bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean" />
-
-    <bean id="jobLauncher"   class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
-        <property name="jobRepository" ref="jobRepository" />
-    </bean>
-
-    <bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry"/>
-
 
 
 

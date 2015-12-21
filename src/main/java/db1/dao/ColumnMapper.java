@@ -18,6 +18,9 @@ public class ColumnMapper implements RowMapper<Column> {
         column.setdATA_LENGTH(rs.getString("DATA_LENGTH"));
         column.setdATA_TYPE(rs.getString("DATA_TYPE"));
         column.setnULLABLE(rs.getString("NULLABLE"));
+        column.setcHAR_USED(rs.getString("CHAR_USED"));
+        column.setcHAR_LENGTH(rs.getString("CHAR_LENGTH"));
+
         return column;
     }
 }

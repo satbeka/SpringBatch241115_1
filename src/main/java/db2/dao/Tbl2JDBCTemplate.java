@@ -33,7 +33,7 @@ public class Tbl2JDBCTemplate implements Tbl2Dao {
 
     public void createTbl(String sqlCreateTbl) {
         //String SQL = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE from all_tab_columns cc where cc.TABLE_NAME= ?";
-        System.out.println("sqlCreateTbl=" + sqlCreateTbl+"222");
+        System.out.println("sqlCreateTbl=" + sqlCreateTbl);
 
         String SQL = sqlCreateTbl;
         jdbcTemplateObject2.execute(SQL);
@@ -47,16 +47,18 @@ public class Tbl2JDBCTemplate implements Tbl2Dao {
 
     public void dropTbl(Tbl tbl) {
 
-        String sqlDropTbl="drop table "+tbl.getName()+"222";
+        String sqlDropTbl="drop table "+tbl.getName();
 
 try {
     jdbcTemplateObject2.execute(sqlDropTbl);
 }
 catch (Exception e){
-    if (!e.getMessage().contains("ORA-00942: таблица или представление пользователя не существует")){
+    if (!e.getMessage().contains("ORA-00942")){
         System.out.println(" ok e.getMessage()="+e.getMessage().toString());
         return;
     };
+
+
     System.out.println("e.getMessage()="+e.getMessage().toString());
 };
         System.out.println("end dropTbl() ");
@@ -88,7 +90,7 @@ catch (Exception e){
             //int rowTo=tbl.getRowNumTo();
             String sqlField= TblSys.getColmnForSelectSQL(tbl);
             String sqlParms= TblSys.getParmsForSelectSQL(tbl);
-            String SQL = "insert into "+tbl.getName()+"222"+" "
+            String SQL = "insert into "+tbl.getName()+" "
                 +
                 "("+sqlField+")\n" +
                 "values\n" +
@@ -106,7 +108,7 @@ catch (Exception e){
                 return updateCounts;
             }
 
-            System.out.println("insTbl TBL222");
+            System.out.println("insTbl TBL");
         /*
         Object rId=mapList.get(0);
         mapList.remove(rId);

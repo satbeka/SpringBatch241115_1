@@ -43,9 +43,10 @@ public class TblJDBCTemplate implements TblDao {
                 "= 'TISR_TWLTRAINING'";
         */
 
-        String SQL = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE from all_tab_columns cc where cc.TABLE_NAME = '"
+        String SQL = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE,cc.CHAR_USED,cc.CHAR_LENGTH" +
+                " from sys.all_tab_columns cc where lower(cc.TABLE_NAME) = '"
                 +tbl.getName()+"'";
-
+        System.out.println("SQL tbl description ="+SQL);
 
         /*
         String SQL2 = "select cc.COLUMN_NAME,cc.DATA_TYPE,cc.DATA_LENGTH,cc.NULLABLE from all_tab_columns cc where rownum<5" +
@@ -78,6 +79,8 @@ public class TblJDBCTemplate implements TblDao {
 
         String SQL ="select "+sqlField+" from  (select rownum r_id,r.* from "+tbl.getName()+" r) tt " +
                 "where tt.r_id>"+rowFrom+" and tt.r_id<="+rowTo;
+
+        System.out.println("SQL ronum="+SQL);
 
         List<Map<String, Object>> mapList;
         try {

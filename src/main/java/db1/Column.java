@@ -40,4 +40,24 @@ public class Column {
     private String dATA_LENGTH;
     private String nULLABLE;
 
+    public String getcHAR_LENGTH() {
+        return cHAR_LENGTH;
+    }
+
+    public void setcHAR_LENGTH(String cHAR_LENGTH) {
+        this.cHAR_LENGTH = cHAR_LENGTH;
+    }
+
+    private String cHAR_LENGTH;
+
+    public String getcHAR_USED() {
+        return cHAR_USED;
+    }
+
+    public void setcHAR_USED(String cHAR_USED) {
+        this.cHAR_USED = cHAR_USED;
+    }
+
+    private String cHAR_USED;
+
 }
