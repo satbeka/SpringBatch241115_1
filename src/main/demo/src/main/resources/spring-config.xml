@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+
+
+    <!-- Definition for tbl bean -->
+    <bean id="tblName" class="db1.Tbl">
+        <property name="name">
+            <value>teacher</value>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@100.100.100.100:1521/ORCL"/>
+        <property name="username" value="444"/>
+        <property name="password" value="444"/>
+    </bean>
+
+    <!-- Definition for tblJDBCTemplate bean -->
+    <bean id="tblJDBCTemplate"
+          class="db1.dao.TblJDBCTemplate">
+        <property name="dataSource"  ref="dataSource" />
+    </bean>
+
+
+
+
+    <bean id="dataSource2" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+        <property name="username" value="test"/>
+        <property name="password" value="test"/>
+    </bean>
+
+    <!-- Definition for tblJDBCTemplate bean -->
+    <bean id="tblJDBCTemplate2"
+          class="db2.dao.Tbl2JDBCTemplate">
+        <property name="dataSource"  ref="dataSource2" />
+    </bean>
+
+
+
+
+</beans>

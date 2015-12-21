@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch 
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		">
+
+	<import resource="context.xml" />
+
+	<bean id="t1" class="db1.TblSys">
+		<property name="tblName" value="student"/>
+	</bean>
+
+	<bean id="t2" class="db1.TblSys">
+		<property name="tblName" value="teacher"/>
+	</bean>
+
+	<job id="myJob" xmlns="http://www.springframework.org/schema/batch">
+
+		<step id="step1" next="step2">
+			<tasklet ref="t1" />
+		</step>
+		<step id="step2">
+			<tasklet ref="t2" />
+		</step>
+
+	</job>
+
+
+
+	<bean id="app" class="kz.springappsat.batch.App">
+		<property name="jobLauncher" ref="jobLauncher"/>
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="job" ref="myJob"/>
+	</bean>
+
+
+
+</beans>
